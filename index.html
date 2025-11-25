@@ -1,0 +1,69 @@
+<!-- Fichiers du site MDL : HTML + CSS séparé -->
+
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MDL - Lycée François Bazin</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="logo mdl.jpg">
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="logo">
+            <img src="logo mdl.jpg" alt="Logo MDL">
+            <h1>MDL - Lycée François Bazin</h1>
+        </div>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="contact.html">Contact / Idées</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="hero">
+        <h2>Bienvenue à la MDL</h2>
+        <p>La Maison Des Lycéens du Lycée François Bazin organise et soutient vos projets, événements et activités au sein du lycée. Rejoins-nous pour créer, apprendre et t'amuser ensemble !</p>
+    </section>
+
+    <section class="cards">
+        <div class="card">
+            <h3>Mission</h3>
+            <p>Promouvoir la vie lycéenne et aider les élèves à monter leurs projets.</p>
+        </div>
+        <div class="card">
+            <h3>Projets</h3>
+            <p>Ateliers, événements culturels, aides aux associations étudiantes et actions solidaires.</p>
+        </div>
+    </section>
+
+    <section class="events">
+        <h2>Prochains événements</h2>
+        <div class="event">
+            <div class="date">Vendredi 19 Decembre</div>
+            <div class="details">
+                <strong>Bal de noël</strong>
+                <p>Cantine • 18h - 22h</p>
+            </div>
+        </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>© <span id="year"></span> MDL - Lycée François Bazin</p>
+    </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>

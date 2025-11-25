@@ -1,0 +1,150 @@
+<!-- contact.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <!-- Indique que la page est en UTF-8 (permet d’afficher les accents correctement) -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Permet à la page d’être responsive sur téléphone et tablette -->
+
+    <title>Contact / Idées - MDL</title>
+    <!-- Titre affiché dans l’onglet du navigateur -->
+
+    <link rel="stylesheet" href="style.css">
+    <!-- Lien vers ton fichier CSS (séparé du HTML) -->
+
+    <link rel="icon" type="image/png" href="logo mdl.jpg">
+    <!-- Définition du favicon (l’icône du site affichée dans l’onglet) -->
+
+    <!-- Import de la bibliothèque EmailJS depuis un CDN (hébergement externe) -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <script>
+        // Cette fonction anonyme s’exécute automatiquement au chargement de la page
+        (function(){
+            // Initialisation d’EmailJS avec ta "Public Key" (clé publique)
+            // Elle relie ton site à ton compte EmailJS
+            emailjs.init("FpeB-arEyrUulFi_n");
+        })();
+
+        // Fonction appelée quand l’utilisateur clique sur "Envoyer"
+        function sendIdea(e){
+            e.preventDefault(); 
+            // Empêche le rechargement automatique de la page quand on soumet le formulaire
+
+            // On récupère les valeurs entrées par l’utilisateur dans le formulaire
+            const name = document.getElementById('name').value.trim();   // Nom
+            const email = document.getElementById('email').value.trim(); // Email
+            const idea = document.getElementById('idea').value.trim();   // Message / Idée
+
+            // Zone de texte où on affiche un message d’état (succès ou erreur)
+            const status = document.getElementById('formStatus');
+
+            // Vérifie que tous les champs sont remplis
+            if(!name || !email || !idea){
+                status.textContent = 'Veuillez remplir tous les champs.';
+                return; // Arrête la fonction si un champ est vide
+            }
+
+            // Envoi du message via le service EmailJS
+            // Les paramètres : 
+            // 1️⃣ "service_n4o5ax8" = ton Service ID (relie ton compte EmailJS)
+            // 2️⃣ "template_oghmtfo" = ton Template ID (modèle du message)
+            // 3️⃣ le contenu envoyé (nom, email, message)
+            emailjs.send("service_683zz7h", "template_a2kq4rn", {
+                from_name: name,     // correspond à {{from_name}} dans ton template EmailJS
+                from_email: email,   // correspond à {{from_email}}
+                message: idea        // correspond à {{message}}
+            })
+
+            // Si l’envoi est réussi :
+            .then(function(){
+                status.textContent = 'Merci ! Votre idée a été envoyée.';
+                // On vide le formulaire
+                document.getElementById('ideaForm').reset();
+            }, 
+
+            // Si une erreur se produit :
+            function(err){
+                status.textContent = 'Erreur lors de l\'envoi. Réessayez.';
+                console.error(err); // Affiche l’erreur dans la console (pour le débogage)
+            });
+        }
+    </script>
+</head>
+<body>
+
+<!-- En-tête du site -->
+<header>
+    <div class="container">
+        <div class="logo">
+            <!-- Logo + Titre -->
+            <img src="logo mdl.jpg" alt="Logo MDL">
+            <h1>MDL - Lycée François Bazin</h1>
+        </div>
+
+        <!-- Barre de navigation -->
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="contact.html">Contact / Idées</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Contenu principal de la page -->
+<main class="container">
+
+    <!-- Première section : les informations de contact -->
+    <section class="card">
+        <h2>Contactez-nous</h2>
+        <p>Pour toute question ou information :</p>
+        <p><strong>Email :</strong> 
+            <!-- Lien cliquable pour envoyer un mail directement -->
+            <a href="mailto:bazinmdl@gmail.com">bazinmdl@gmail.com</a>
+        </p>
+    </section>
+
+    <!-- Deuxième section : la boîte à idées -->
+    <section class="card" style="margin-top:18px;">
+        <h2>Boîte à idées</h2>
+        <p>Envoyez vos idées aux membres de la MDL :</p>
+
+        <!-- Formulaire de saisie -->
+        <!-- Quand on appuie sur "Envoyer", la fonction sendIdea() est appelée -->
+        <form id="ideaForm" onsubmit="sendIdea(event)">
+            <!-- Champ pour le nom -->
+            <input type="text" id="name" placeholder="Votre nom" required
+            style="width:100%;padding:10px;margin-bottom:8px;border-radius:8px;border:1px solid #e6eef0;">
+
+            <!-- Champ pour l’adresse mail -->
+            <input type="email" id="email" placeholder="Votre email" required
+            style="width:100%;padding:10px;margin-bottom:8px;border-radius:8px;border:1px solid #e6eef0;">
+
+            <!-- Zone de texte pour l’idée -->
+            <textarea id="idea" placeholder="Votre idée" required
+            style="width:100%;padding:10px;margin-bottom:8px;border-radius:8px;border:1px solid #e6eef0;min-height:96px;"></textarea>
+
+            <!-- Bouton d’envoi -->
+            <button type="submit" class="cta">Envoyer</button>
+
+            <!-- Zone où s’affichent les messages de confirmation ou d’erreur -->
+            <div id="formStatus" class="muted small" style="margin-top:8px"></div>
+        </form>
+    </section>
+</main>
+
+<!-- Pied de page -->
+<footer>
+    <div class="container">
+        <p>© <span id="year"></span> MDL - Lycée François Bazin</p>
+    </div>
+</footer>
+
+<script>
+    // Petit script pour afficher automatiquement l’année actuelle dans le footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
